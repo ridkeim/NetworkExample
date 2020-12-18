@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">NetworkExample</string>
-    <string name="info">info</string>
+    <string name="info">Нет подходящих подключеных сетей</string>
 </resources>
