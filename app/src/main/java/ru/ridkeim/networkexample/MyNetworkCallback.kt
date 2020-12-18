@@ -8,7 +8,7 @@ import android.util.Log
 
 class MyNetworkCallback(private val listener : CurrentNetworkListener) : ConnectivityManager.NetworkCallback() {
     interface CurrentNetworkListener{
-        fun setNetworkAvailable(value : Boolean)
+        fun setSomethingChanged(value : Boolean)
     }
 
     companion object{
@@ -26,23 +26,25 @@ class MyNetworkCallback(private val listener : CurrentNetworkListener) : Connect
     }
 
     override fun onLost(network: Network) {
+        listener.setSomethingChanged(true)
         Log.d(TAG,"lost $network" )
         super.onLost(network)
     }
 
     override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
         Log.d(TAG,"network $network capabilitiesChanged $networkCapabilities")
-        listener.setNetworkAvailable(true)
+        listener.setSomethingChanged(true)
         super.onCapabilitiesChanged(network, networkCapabilities)
     }
 
     override fun onLinkPropertiesChanged(network: Network, linkProperties: LinkProperties) {
         Log.d(TAG,"network $network propertiesChanged $linkProperties")
-        listener.setNetworkAvailable(true)
+        listener.setSomethingChanged(true)
         super.onLinkPropertiesChanged(network, linkProperties)
     }
 
     override fun onBlockedStatusChanged(network: Network, blocked: Boolean) {
+        listener.setSomethingChanged(true)
         Log.d(TAG,"network $network blockedStatusChanged=$blocked")
         super.onBlockedStatusChanged(network, blocked)
     }

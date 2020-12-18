@@ -3,14 +3,9 @@ package ru.ridkeim.networkexample
 import androidx.lifecycle.*
 
 class MainViewModel : ViewModel(), MyNetworkCallback.CurrentNetworkListener{
-    private val _hasInternet = MutableLiveData(false)
-    val hasInternet : LiveData<Boolean>
-    get() = _hasInternet
-
-    override fun setNetworkAvailable(value: Boolean) {
-        _hasInternet.postValue(value)
-    }
-
+    private val _networkChanged = MutableLiveData(false)
+    val networkChanged : LiveData<Boolean>
+    get() = _networkChanged
 
     class Factory : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
@@ -20,5 +15,9 @@ class MainViewModel : ViewModel(), MyNetworkCallback.CurrentNetworkListener{
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+    override fun setSomethingChanged(value: Boolean) {
+        _networkChanged.postValue(value)
     }
 }
